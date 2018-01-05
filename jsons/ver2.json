@@ -1,0 +1,55 @@
+{
+	"parts":[
+		{"name":"Druckbehaelter",
+			"features":[{"name":"pressure"},
+						{"name":"content"},
+						{"name":"temperature"}
+			],
+			"opt_components":[{"name":"Ruehrwerk"},
+							  {"name":"Pumpe"}
+			]
+		},
+		{"name":"Ruehrwerk",
+			"features":[{"name":"voltage"},
+						{"name":"wattage"}
+			]
+		},
+		{"name":"Pumpe",
+			"features":[{"name":"voltage"},
+						{"name":"wattage"},
+						{"name":"NPSH"}
+			]
+		}
+	],
+
+
+	"features":[
+		{"name":"voltage",
+			 "types":[{"name":"ac",
+				 		    "activates_directives":[{"name":"2014/35/EU","if":"50<voltage<1000"}
+				 		    ]
+				 	  },
+			 		  {"name":"dc",
+			 		   		"activates_directives":[{"name":"2014/35/EU","if":"75<voltage<1500"}
+			 		   		]
+			 		  }
+			 ]
+		},
+		{"name":"wattage"
+		},
+		{"name":"pressure",
+			"activates_directives":[{"name":"2014/68/EU","if":"pressure_test_class_yields_TRUE"}
+			]
+		},
+		{"name":"temperature"
+		}
+	],
+
+
+
+	"contents":[
+		{"name":"Jauche",
+		 "activates_directive":"AwSV"
+		}
+	]
+}

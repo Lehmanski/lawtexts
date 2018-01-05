@@ -26,11 +26,11 @@
 	"features":[
 		{"name":"voltage",
 			 "types":[{"name":"ac",
-				 		    "activates_directives":[{"name":"2014/35/EU","if":"50<voltage<1000"}
+				 		    "activates_directive":[{"name":"2014/35/EU","if":"50<voltage<1000"}
 				 		    ]
 				 	  },
 			 		  {"name":"dc",
-			 		   		"activates_directives":[{"name":"2014/35/EU","if":"75<voltage<1500"}
+			 		   		"activates_directive":[{"name":"2014/35/EU","if":"75<voltage<1500"}
 			 		   		]
 			 		  }
 			 ]
@@ -38,18 +38,14 @@
 		{"name":"wattage"
 		},
 		{"name":"pressure",
-			"activates_directives":[{"name":"2014/68/EU","if":"pressure_test_class_yields_TRUE"}
+			"activates_directive":[{"name":"2014/68/EU","if":"pressure_test_class_yields_TRUE"}
 			]
 		},
 		{"name":"temperature"
-		}
+		},
+		{"name":"contents",
+			"types":[{"name":"Jauche",
+						"activates_directive":"AwSV"}
+			]}
 	],
-
-
-
-	"contents":[
-		{"name":"Jauche",
-		 "activates_directive":"AwSV"
-		}
-	]
 }

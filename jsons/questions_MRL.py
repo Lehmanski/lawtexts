@@ -1,4 +1,5 @@
 from MRLExceptionList import MRLExceptions
+from MRLProductClasses import *
 
 done = False
 
@@ -9,9 +10,10 @@ class Question():
 		self.negChild = None
 
 class Result():
-	def __init__(self, text, bool):
+	def __init__(self, text, bool, pClass = Generic()):
 		self.text = text
 		self.bool = bool 
+		self.pClass = pClass
 
 class Test():
 	def __init__(self):
@@ -45,8 +47,8 @@ class Test():
 Results
 """
 #machine results
-resultUnvollstaendigeMaschine = Result('Unvollstaendige Maschine! (daten hier einpflegen) \n',False)
-resultMaschine = Result('Maschine! (daten hier einpflegen) \n\n', False)
+resultUnvollstaendigeMaschine = Result('Unvollstaendige Maschine! (daten hier einpflegen) \n',False, UnvollstMaschine())
+resultMaschine = Result('Maschine! (daten hier einpflegen) \n\n', False, Maschine())
 resultKeinProdukt_a_g = Result('Keine Produkt nach Artikel 1(1)a / 1(1)g \n\n', True)
 
 # intermittent results
@@ -56,24 +58,24 @@ resultSchnittstelle = Result('Einzelne Maschinen bzw. Produkt Schnittstellen bea
 
 
 resultFalschesWerkzeug = Result('Die Verwendung des Werkzeugs ist nicht vom (Zug-)Maschinen Hersteller vorgesehen. Verwendung unter Verantwortung des Betreibers.\n\n',True)
-resultWerkzeug =  Result('Werkzeug; beschrieben in Betriebsanleitung nach MRL Anhang I 1.7.4.2 n)\n\n',False)
+resultWerkzeug =  Result('Werkzeug; beschrieben in Betriebsanleitung nach MRL Anhang I 1.7.4.2 n)\n\n',False, Werkzeug())
 
-resultAuswAusruestung =  Result('Auswechselbare Ausruestung. (Anweisungen hier rein packen)\n\n',False)
+resultAuswAusruestung =  Result('Auswechselbare Ausruestung. (Anweisungen hier rein packen)\n\n',False, AuswAusruestung())
 resultKeineAuswAusruestung = Result('Das Produkt ist keine Auswechselbare Ausruestung.\n\n',True)
 
 
 resultKeinSicherheitsBauteil = Result('Das Produkt ist kein Sicherheitsbauteil.\n\n',True)
-resultSicherheitsBauteil = Result('Das Produkt ist ein Sicherheitsbauteil. (Anweisung hier rein packen)\n\n',False)
+resultSicherheitsBauteil = Result('Das Produkt ist ein Sicherheitsbauteil. (Anweisung hier rein packen)\n\n',False, Sicherheitsbauteil())
 resultAusgeschlossenesSicherheitsBauteil = Result('Das Produkt ist ein Sicherheitsbauteil, allerdings aus der Richtlinie ausgenommen.\n\n',True)
 
 
 resultKeinLastenaufnahmeMittel = Result('Kein Produkt nach Artikel 1 (1) d) / e)\n\n', True)
-resultLastenaufnahmeMittel = Result('Das Produkt ist ein Lastenaufnahmemittel\n\n', False)
+resultLastenaufnahmeMittel = Result('Das Produkt ist ein Lastenaufnahmemittel\n\n', False, Lastenaufnahmemittel())
 
 
 resultKetten = Result('Es handelt sich bei dem Produkt um Ketten, Seile oder Gurte (Anweisungen hier einfuegen)\n\n', False)
 
-resultGelenkwelle = Result('Das Produkt ist eine Gelenkwelle. (Anweisungen einpflegen)\n\n', False)
+resultGelenkwelle = Result('Das Produkt ist eine Gelenkwelle. (Anweisungen einpflegen)\n\n', False, Gelenkwelle())
 resultKeineGelenkwelle = Result('Es handelt sich bei dem Produkt nicht um eine abnehmbare Gelenkwelle\n\n', True)
 
 

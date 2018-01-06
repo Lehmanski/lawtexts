@@ -1,5 +1,5 @@
 from MRLExceptionList import MRLExceptions
-from MRLProductClasses import *
+from productClasses_MRL import *
 from questions import Question, Result, Test 
 
 done = False

@@ -1,3 +1,4 @@
+from productClasses_all import Generic
 
 class Question():
 	def __init__(self, text):

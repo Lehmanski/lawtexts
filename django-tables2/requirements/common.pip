@@ -1,0 +1,8 @@
+# mocks/stubs for tests
+fudge
+# xml parsing
+lxml
+pytz>0
+tablib==0.11.4
+mock
+psycopg2

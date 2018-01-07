@@ -1,0 +1,18 @@
+{% load static %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en" }}">
+	<script src="{% static "js/jquery.js" %}"></script>
+	<script src="{% static "js/rango-jquery.js" %}"></script>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Django madness">
+        <meta name="author" content="Nilus van Edel">
+
+    <body>
+        {% block content %}
+        
+        {% endblock content %}
+
+    </body>
+</html>

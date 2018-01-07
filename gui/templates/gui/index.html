@@ -1,0 +1,16 @@
+{# tutorial/templates/tutorial/people.html #}
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% block content %}
+	<title>List of persons</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    </head>
+    <button onClick="alert('You clicked the button using Javascript.');">
+       Click Me - I run Javascript
+	</button>
+    <button id="about-btn"> Click Me - I'm Javascript on Speed</button>
+    <body>
+        {% render_table table %}
+    </body>
+{% endblock %}
+

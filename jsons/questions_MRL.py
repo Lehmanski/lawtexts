@@ -1,18 +1,17 @@
-from MRLExceptionList import MRLExceptions
+from MRLExceptionList import MRLExceptions, MRLAnhangIV
 from productClasses_MRL import *
 from questions import Question, Result, Test 
-
-done = False
-
-
+import webbrowser, os
 
 """
 Results
 """
 #machine results
 resultUnvollstaendigeMaschine = Result('Unvollstaendige Maschine! (daten hier einpflegen) \n',False, UnvollstMaschine())
-resultMaschine = Result('Maschine! (daten hier einpflegen) \n\n', False, Maschine())
+resultMaschineNichtIV = Result('Maschine! (daten hier einpflegen) \n\n', False, Maschine())
 resultKeinProdukt_a_g = Result('Keine Produkt nach Artikel 1(1)a / 1(1)g \n\n', True)
+resultMaschineHarm = Result('Es wird davon ausgegangen, dass die Maschine den von dieser harmonisierten Norm erfassten grundlegenden Sicherheits- und Gesundheitsschutzanforderungen entspricht.\n\n',False,MaschineIV())
+resultMaschineHarm_tw = Result('Es wird davon ausgegangen, dass die Maschine den von dieser harmonisierten Norm erfassten grundlegenden Sicherheits- und Gesundheitsschutzanforderungen entspricht, diese allerdings nicht alle relevanten grundlegenden Sicherheits- und Gesundheitsschutzanforderungen berücksichtigen.\n\n',False, MaschineIV_tw())
 
 # intermittent results
 resultVerbindung = Result('Verbindungen müssen in Betriebsanleitung spezifiziert werden.\n\n',True)
@@ -80,6 +79,10 @@ q5c_mrl_M = Question('Ist das Produkt fast eine Maschine?')
 
 q6a_mrl_M = Question('Ist das Antriebssystem genau spezifiziert?')
 q6b_mrl_M = Question('Handelt es sich um ein Produkt fuer Hebevorgaenge?')
+q6b_mrl_M_IV = Question('Findet sich das Produkt in folgender Liste wider?:'+MRLAnhangIV)
+
+q6b_mrl_M_harm = Question('Ist die Maschine nach einer harmonisierten Norm hergestellt worden und berücksichtigen diese Normen alle relevanten grundlegenden Sicherheits- und Gesundheitsschutzanforderungen?')
+
 q6c_mrl_M = Question('Das Antriebssystem ist die unmittelbar eingesetzte tierische Kraft?')
 
 
@@ -120,8 +123,17 @@ q5c_mrl_M.negChild = F
 
 q6a_mrl_M.posChild = q5a_mrl_M
 q6a_mrl_M.negChild = F
-q6b_mrl_M.posChild = resultMaschine
+
+
+q6b_mrl_M.posChild = q6b_mrl_M_IV
 q6b_mrl_M.negChild = resultKeinProdukt_a_g
+
+q6b_mrl_M_IV.negChild = resultMaschineNichtIV
+q6b_mrl_M_IV.posChild = q6b_mrl_M_harm
+
+q6b_mrl_M_harm.posChild = resultMaschineHarm
+q6b_mrl_M_harm.negChild = resultMaschineHarm_tw
+
 q6c_mrl_M.posChild = F 
 q6c_mrl_M.negChild = q7a_mrl_M
 
@@ -134,9 +146,9 @@ q8a_mrl_M.negChild = q9b_mrl_M
 q9a_mrl_M.posChild = resultEinbau
 q9a_mrl_M.negChild = q4b_mrl_M
 q9b_mrl_M.posChild = q10a_mrl_M
-q9b_mrl_M.negChild = resultMaschine
+q9b_mrl_M.negChild = resultMaschineNichtIV
 
-q10a_mrl_M.posChild = resultMaschine
+q10a_mrl_M.posChild = resultMaschineNichtIV
 q10a_mrl_M.negChild = resultSchnittstelle
 
 
@@ -253,20 +265,30 @@ q2_mrl_GW.posChild = resultGelenkwelle
 q1_mrl_GW.negChild = resultKeineGelenkwelle
 
 
-t = Test()
-testResult = t.start(q1_mrl_E)
 
-if testResult.bool:
-	testResult = t.start(q1_mrl_M)
+def startQuestions():
+	t = Test()
+	testResult = t.start(q1_mrl_E)
 
-if testResult.bool:
-	testResult = t.start(q1_mrl_AA)
+	if testResult.bool:
+		testResult = t.start(q1_mrl_M)
 
-if testResult.bool:
-	testResult = t.start(q1_mrl_SB)
+	if testResult.bool:
+		testResult = t.start(q1_mrl_AA)
 
-if testResult.bool:
-	testResult = t.start(q1_mrl_L)
+	if testResult.bool:
+		testResult = t.start(q1_mrl_SB)
 
-if testResult.bool:
-	testResult = t.start(q1_mrl_GW)
+	if testResult.bool:
+		testResult = t.start(q1_mrl_L)
+
+	if testResult.bool:
+		testResult = t.start(q1_mrl_GW)
+
+	return testResult
+
+
+if __name__ == '__main__':
+	result = startQuestions()
+	p = os.path.join(os.getcwd(),result.pClass.HTML_resource)
+	webbrowser.open(p)

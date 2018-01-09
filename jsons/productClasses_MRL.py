@@ -16,7 +16,7 @@ class MaschineIV_tw():
 class UnvollstMaschine():
 	def __init__(self):
 		self.text = '' 
-		self.HTML_resource = None
+		self.HTML_resource = 'HTML_ressources/UnvollstMaschine.html'
 
 class Sicherheitsbauteil():
 	def __init__(self):

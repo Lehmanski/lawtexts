@@ -1,0 +1,93 @@
+{
+	"Bearbeitung von Holz und von Werkstoffen mit ähnlichen physikalischen Eigenschaften":{
+			"MRL":{
+				"+":["Anhang_I_2.3"],
+				"?":["Anhang_IV"],
+				"-":[]}
+		},
+
+	"Bearbeitung von Metallen und von Werkstoffen mit ähnlichen physikalischen Eigenschaften":{
+			"MRL":{
+				"+":[],
+				"?":["Anhang_IV"],
+				"-":[]}
+		},
+
+	"Bearbeitung von Fleisch und von Werkstoffen mit ähnlichen physikalischen Eigenschaften":{
+			"MRL":{
+				"+":["Anhang_I_2.1"],
+				"?":["Anhang_IV"],
+				"-":[]}
+		},
+
+
+	"Bearbeitung von Kunstoffen und von Werkstoffen mit ähnlichen physikalischen Eigenschaften":{
+			"MRL":{
+				"+":[],
+				"?":["Anhang_IV"],
+				"-":[]}
+		},
+
+
+	"Bearbeitung von Gummi und von Werkstoffen mit ähnlichen physikalischen Eigenschaften":{
+			"MRL":{
+				"+":[],
+				"?":["Anhang_IV"],
+				"-":[]}
+		},
+
+
+	"Heben von Personen oder von Personen und Gütern":{
+			"MRL":{
+				"+":["Anhang_I_4","Anhang_I_6"],
+				"?":["Anhang_I_6", "Anhang_IV"],
+				"-":[]
+			},
+			"NSR":{
+				"+":[],
+				"?":[],
+				"-":["NSR"]
+			}
+		},
+
+	"Heben von Gütern":{
+			"MRL":{
+				"+":["Anhang_I_4"],
+				"?":["Anhang_I_6", "Anhang_IV"],
+				"-":[]
+			},
+			"NSR":{
+				"+":[],
+				"?":[],
+				"-":["NSR"]
+			}
+		},
+
+	"Nahrungsmittelmaschine":{
+			"MRL":{
+				"+":["Anhang_I_2.1"],
+				"?":[],
+				"-":[]}
+		},
+
+	"für kosmetische oder pharmazeutische Erzeugnisse":{
+			"MRL":{
+				"+":["Anhang_I_2.1"],
+				"?":[],
+				"-":[]}
+		},
+
+	"nicht durch menschliche Kraft angetrieben":{
+			"MRL":{
+				"+":[],
+				"?":["Anhang_I_4","Anhang_I_6"],
+				"-":[]}
+		},
+
+	"handgehalten und/oder handgeführte tragbare Maschine":{
+			"MRL":{
+				"+":["Anhang_I_2.2"],
+				"?":[],
+				"-":[]}
+		}
+}

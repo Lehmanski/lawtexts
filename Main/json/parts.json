@@ -1,18 +1,16 @@
 {
 	"parts":[
-		{
-			"Druckbehälter":[
-				{"Druck"},
-				{"Inhalt"},
-				{"Volumen"},
-				{"Temperatur"}
+		{"Druckbehälter":[
+			{"Druck"},
+			{"Inhalt"},
+			{"Volumen"},
+			{"Temperatur"}
 			]
 		},
-		{
-			"Elektromotor":[
-				{"Leistung"},
-				{"Spannung"}
+		{"Elektromotor":[
+			{"Leistung"},
+			{"Spannung"}
 			]
-		},
+		}
 	]
 }

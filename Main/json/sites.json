@@ -1,0 +1,45 @@
+{
+	"in einer explosionsfähigen Atmosphäre":{
+		"MRL":{
+			"+":["Anhang_I_5"],
+			"?":["Anhang_IV"],
+			"-":[]
+		}
+	},
+	"auf Seeschiffen/Offshore Anlagen":{
+		"MRL":{
+			"+":[],
+			"?":[],
+			"-":["MRL"]
+		},
+		"NSR":{
+			"+":[],
+			"?":[],
+			"-":["NSR"]
+		}
+	},
+	"auf Eisenbahnen":{
+		"MRL":{
+			"+":[],
+			"?":[],
+			"-":["MRL"]
+		},
+		"NSR":{
+			"+":[],
+			"?":[],
+			"-":["NSR"]
+		}
+	},
+	"auf Flugzeugen":{
+		"MRL":{
+			"+":[],
+			"?":[],
+			"-":["MRL"]
+		},
+		"NSR":{
+			"+":[],
+			"?":[],
+			"-":["NSR"]
+		}
+	}
+}

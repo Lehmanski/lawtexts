@@ -1,6 +1,6 @@
 {
 	"features":[
-		{"name":"Spannung", "units":[{"Volt"}] 
+		{"name":"Spannung", "units":[{"Volt AC"},{"Volt DC"}] 
 		},
 		
 		{"name":"Leistung","units":[{"KW/h"},{"ps"}]

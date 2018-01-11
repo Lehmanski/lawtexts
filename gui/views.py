@@ -17,6 +17,7 @@ from django_tables2 import RequestConfig
 from .models import Equipment
 from .tables import EquipmentTable
 from django.views.generic import TemplateView
+from django.http import HttpResponse
 
 class EquipmentView(TemplateView):
     template_name="gui/index.html"
@@ -24,3 +25,11 @@ class EquipmentView(TemplateView):
         table = EquipmentTable(Equipment.objects.all())
         RequestConfig(request).configure(table)
         return render(request, 'gui/index.html', {'table': table})
+class DeleteView(TemplateView):
+    template_name="gui/test.html"
+    def get(self, request,*args, **kwargs):
+        table = EquipmentTable(Equipment.objects.all())
+        del_id = int(kwargs['user_id'])
+        Equipment.objects.filter(id=del_id).delete()
+        RequestConfig(request).configure(table)
+        return render(request, 'gui/test.html', {'table': table})

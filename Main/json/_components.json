@@ -4,12 +4,9 @@
 			"aktiviert":{
 			},
 			"deaktiviert":{
-			},
-			"betrifft vielleicht":{
-				"DGN"
 			}
 		},
-		"Eigentschaften":[
+		"Eigenschaften":[
 			"Druck",
 			"Inhalt",
 			"Temperatur",
@@ -17,22 +14,19 @@
 		]
 	},
 
-
-
 	"Elektromotor":{
 		"Richtlinien":{
 			"aktiviert":{
 			},
 			"deaktiviert":{
 				"MRL":{"text":"Artikel_1_(2)"}
-			},
-			"betrifft vielleicht":{
-				"DGN"
 			}
 		},
-		"Eigentschaften":[
+		"Eigenschaften":[
 			"Spannung",
 			"Leistung"
 		]
 	}
+
+
 }

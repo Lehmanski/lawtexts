@@ -1,9 +1,11 @@
 {
 	"Bearbeitung von Holz und von Werkstoffen mit ähnlichen physikalischen Eigenschaften":{
-			"aktiviert":{
+			"benötigt Text":{
 				"MRL":{
 					"text":"Anhang_I_2.3"
 				}
+			},
+			"aktiviert":{
 			},
 			"deaktiviert":{
 			},
@@ -22,10 +24,12 @@
 		},
 
 	"Bearbeitung von Fleisch und von Werkstoffen mit ähnlichen physikalischen Eigenschaften":{
-			"aktiviert":{
+			"benötigt Text":{
 				"MRL":{
 					"text":"Anhang_I_2.1"
 				}
+			},
+			"aktiviert":{
 			},
 			"deaktiviert":{
 			},
@@ -56,11 +60,13 @@
 
 
 	"Heben von Personen oder von Personen und Gütern":{
-			"aktiviert":{
+			"benötigt Text":{
 				"MRL":{
 					"text":"Anhang_I_4",
 					"text":"Anhang_I_6"
 				}
+			},
+			"aktiviert":{
 			},
 			"deaktiviert":{
 				"NSR":{

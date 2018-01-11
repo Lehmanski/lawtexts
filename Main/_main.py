@@ -17,6 +17,8 @@ from _logicUnit import LOGIC
 
 from _printer import Printer
 
+
+#TODO: anwendbar auf/von 
 #sys.path.insert(0, os.path.join(os.getcwd(),'productClasses/'))
 
 """

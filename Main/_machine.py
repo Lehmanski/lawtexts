@@ -55,6 +55,5 @@ class Machine():
 							  		'Komponenten':[]
 							  },
 							  'rigid_state':False
-				       		 }
-				       
+				       		 }				       
 				       }

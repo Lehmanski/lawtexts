@@ -59,14 +59,18 @@ add data to Product
 configurator = Configurator(Product)
 configurator.configure(data)
 
+
 # generate html header
 Product.addDescription()
-
 
 # test MRL
 Logic.checkMRL()
 Logic.checkNSR()
 
+
+# generate html procedure list
+Product.compileProcedures()
+Product.compileComponentDirectiveRelationList()
 
 # Print response
 Product.printResponse()

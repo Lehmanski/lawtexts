@@ -1,0 +1,38 @@
+{
+	"Druckbehälter":{
+		"Richtlinien":{
+			"aktiviert":{
+			},
+			"deaktiviert":{
+			},
+			"betrifft vielleicht":{
+				"DGN"
+			}
+		},
+		"Eigentschaften":[
+			"Druck",
+			"Inhalt",
+			"Temperatur",
+			"Volumen"
+		]
+	},
+
+
+
+	"Elektromotor":{
+		"Richtlinien":{
+			"aktiviert":{
+			},
+			"deaktiviert":{
+				"MRL":{"text":"Artikel_1_(2)"}
+			},
+			"betrifft vielleicht":{
+				"DGN"
+			}
+		},
+		"Eigentschaften":[
+			"Spannung",
+			"Leistung"
+		]
+	}
+}

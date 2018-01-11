@@ -1,0 +1,15 @@
+{
+	"in einer explosionsfähigen Atmosphäre":{
+			"aktiviert":{
+				"MRL":{
+					"text":"Anhang_I_5"
+				}
+			},
+			"deaktiviert":{
+				"NSR":{"text":"NSR_Anhang_II"}
+			},
+			"betrifft vielleicht":{
+				"MRL":{"deaktivierend":"Anhang_IV"}
+			}
+		}
+}

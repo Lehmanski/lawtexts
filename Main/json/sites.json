@@ -4,6 +4,11 @@
 			"+":["Anhang_I_5"],
 			"?":["Anhang_IV"],
 			"-":[]
+		},
+		"NSR":{
+			"+":[],
+			"?":[],
+			"-":["NSR"]
 		}
 	},
 	"auf Seeschiffen/Offshore Anlagen":{
@@ -40,6 +45,30 @@
 			"+":[],
 			"?":[],
 			"-":["NSR"]
+		}
+	},
+	
+	"auf Jahrmärkten und in Vergnügungsparks":{
+		"MRL":{
+			"+":[],
+			"?":[],
+			"-":["MRL"]
+		}
+	},
+	
+	"in Laboratorien":{
+		"MRL":{
+			"+":[],
+			"?":[],
+			"-":["MRL"]
+		}
+	},
+	
+	"im Haushalt":{
+		"MRL":{
+			"+":[],
+			"?":[],
+			"-":["MRL"]
 		}
 	}
 }

@@ -30,11 +30,12 @@ class LOGIC():
 			if purpose in self.purposes:
 				if 'MRL' in self.purposes[purpose]:
 					positive_entry = self.purposes[purpose]['MRL']['+']
+					negative_entry = self.purposes[purpose]['MRL']['-']
 				else:
 					continue
 				# activate MRL, if not already active
 				if not self.Product.MRL:
-					self.Product.setMRLApplies(True, purpose)
+					self.Product.setMRL(purpose, True)
 				for p in positive_entry:
 					#switch case
 					if p == 'Anhang_I_2.1':
@@ -51,6 +52,9 @@ class LOGIC():
 						self.Product.setUntertage()
 					elif p == 'Anhang_I_6':
 						self.Product.setHebtPersonen()
+						
+
+
 		# for every site the machine is going to be used at
 		for site in self.Product.json['Verwendungsorte']:
 			# check if site is known
@@ -77,18 +81,18 @@ class LOGIC():
 					continue
 				if 'NSR' in negative_entry:
 					text = '<br> <strong>Verwendungszweck</strong>: {0}'.format(purpose)
-					self.Product.setNSR(False, text)
+					self.Product.setNSR(text, False)
 					return
 
-		for purpose in self.Product.json['Verwendungsorte']:
-			if purpose in self.purposes:
-				if 'NSR' in self.purposes[purpose]:
-					negative_entry = self.purposes[purpose]['NSR']['-']
+		for site in self.Product.json['Verwendungsorte']:
+			if site in self.sites:
+				if 'NSR' in self.sites[site]:
+					negative_entry = self.sites[site]['NSR']['-']
 				else:
 					continue
 				if 'NSR' in negative_entry:
-					text = '<br> <strong>Verwendungsort</strong>: {0}'.format(purpose)
-					self.Product.setNSR(False, text)
+					text = '<br> <strong>Verwendungsort</strong>: {0}'.format(site)
+					self.Product.setNSR(text, False)
 					return 
 
 		"""

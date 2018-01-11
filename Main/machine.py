@@ -21,6 +21,12 @@ class Machine():
 		self.html_names = []
 
 		self.description = None
+		self.procedures = None 
+		self.applicability = None
+
+		self.HTML_description = {}
+		self.HTML_Results = {'MRL':[],'NSR':[]}
+		self.HTML_Procedures = {} 
 
 		self.comments = []
 
@@ -28,20 +34,60 @@ class Machine():
 		self.NSR = None
 
 
+
+	def addToProcedures(self, directiveName, idx, htmlFile):
+		if not directiveName in self.HTML_Procedures:
+			self.HTML_Procedures[directiveName] = []
+		self.HTML_Procedures[directiveName].append((idx, htmlFile))
+
+	def compileProcedures(self):
+		self.procedures = '<h1>Anzuwendende Verfahren</h1>'
+		for directiveName in self.HTML_Procedures:
+			self.procedures += '<h2>{0}</h2>'.format(directiveName)
+			sortedProcedures = sorted(
+					self.HTML_Procedures[directiveName], 
+					key=lambda page: page[0])
+			for procedure in sortedProcedures:
+				with open(P+procedure[1]) as f:
+					lines = ' '.join(f.readlines())
+					self.procedures += lines
+		self.procedures += '<br><br><br>'
+
+	def stateUpdate(self, dN, bool):
+		if dN == 'MRL':
+			self.MRL = bool
+		if dN == 'NSR':
+			self.NSR = bool
+
+
+
+	def updateComponentDirectiveRelationList(self, directiveName, component, bool, type):
+		if not directiveName in self.HTML_Results:
+			self.HTML_Results[directiveName] = []
+		self.HTML_Results[directiveName].append((component, bool, type))
+
+	def compileComponentDirectiveRelationList(self):
+		self.applicability = '<h1>Anwendbarkeit auf Richtlinien</h1>'
+		for directiveName in self.HTML_Results:
+			self.applicability += '<h2>{0}</h2>'.format(directiveName)
+			# check if there is a major reason to exclude directive
+			for rel in self.HTML_Results[directiveName]:
+				if rel[-1]=='MAJOR':
+					self.stateUpdate(directiveName, rel[1])
+				if rel[-1]=='MAJOR' and rel[1]==False:
+					self.applicability += 'Nicht anwendbar: {0}'.format(rel[0])
+					break 
+				if rel[1]:
+					self.applicability += 'Anwendbar: {0}'.format(rel[0])
+		self.applicability += '<br><br><br>'
+
+
+
 	def printResponse(self):
-		sortedPages = sorted(self.html_pages, key=lambda page: page[0])
-		if not self.description is None:
-			html = self.description
-		else:
-			html = ''
-		html += '<h2>Anzuwendende Maßnamen und Prüfverfahren: </h2>'
-		for page in sortedPages:
-			t = open(page[1])
-			lines = t.readlines()
-			for line in lines:
-				html += line
-			t.close()
-			html+='<br>'
+		html = ''
+		html += self.description
+		html += self.applicability 
+		html += self.procedures 
 		# write temp file
 		with open(htmlOutPath, 'w') as f:
 			f.write(html)
@@ -61,7 +107,6 @@ class Machine():
 		return self.htmlDescriptionList(title,items)
 
 
-
 	def addDescription(self):
 		self.description = '<h1>Beschreibung der Maschine:</h1>'
 		for item in self.json.items():
@@ -71,7 +116,6 @@ class Machine():
 				self.description += self.htmlDescriptionDict(item[0],item[1:][0])
 			else:
 				self.description += self.htmlDescriptionLine(item)
-		self.description += '<br><br><br><br><br><h1>Ergebnisse:</h1> \n'
 
 	def addToDescription(self, title, text):
 		self.description += '<h2>{0}</h2>'.format(title)
@@ -82,105 +126,83 @@ class Machine():
 		if not name in self.html_names:
 			self.html_pages.append((name,P+path))
 
-	def setNSR(self,bool,text):
-		if bool:
-			self.NSR = True
-			self.addToDescription('Niederspannungsrichtlinie',
-				'Zutreffend aufgrund von: {0}'.format(text))
-		elif bool is None:
-			self.addToDescription('Niederspannungsrichtlinie',
-				'trifft nicht zu')
-		else:
-			self.NSR = False
-			self.addToDescription('Niederspannungsrichtlinie',
-				'Aus dem Anwendungsbereich ausgenommen aufgrund von: {0}'.format(text))
+	def setNSR(self, component, bool, type='MAJOR'):
+		self.NSR = bool
+		self.updateComponentDirectiveRelationList('NSR', component, bool, type)
+		
 
+	def setMRL(self,component, bool, type='MAJOR'):
+		self.NSR = bool
+		self.updateComponentDirectiveRelationList('MRL', component, bool, type)
 
-	def setMRLApplies(self, bool, text):
-		if (not self.MRL) and bool:
-			self.__setMRLApplies()
-			self.MRL = True
-		if bool:
-			self.addToDescription('Maschinenrichtlinie',
-				'Zutreffend aufgrund von: {0}'.format(text))
-		elif bool is None:
-			self.addToDescription('Maschinenrichtlinie',
-				'trifft nicht zu')
-		else:
-			self.addToDescription('Maschinenrichtlinie',
-				'Aus dem Anwendungsbereich ausgenommen aufgrund von: {0}'.format(text))
-
-
-
-	def __setMRLApplies(self):
-		self.addToPages('0','allg_grundsaetze.html')
-		self.addToPages('1.1.2','1.1.2.html')
-		self.addToPages('1.7.3','1.7.3.html')
-		self.addToPages('1.7.4','1.7.4.html')
+	def setMRLApplies(self):
+		self.addToProcedures('MRL','0','allg_grundsaetze.html')
+		self.addToProcedures('MRL','1.1.2','1.1.2.html')
+		self.addToProcedures('MRL','1.7.3','1.7.3.html')
+		self.addToProcedures('MRL','1.7.4','1.7.4.html')
 		self.comments.append('MRL trifft zu')
 
-
 	def setVollst(self):
-		self.addToPages('z_02_A','Anhang_II_A.html')
+		self.addToProcedures('MRL','z_02_A','Anhang_II_A.html')
 		self.comments.append('vollständig')
 
 	def setUnvollst(self):
-		self.addToPages('z_02_B','Anhang_II_B.html')
-		self.addToPages('z_06','Anhang_VI.html')
-		self.addToPages('z_08B','Anhang_VII_B.html')
+		self.addToProcedures('MRL','z_02_B','Anhang_II_B.html')
+		self.addToProcedures('MRL','z_06','Anhang_VI.html')
+		self.addToProcedures('MRL','z_08B','Anhang_VII_B.html')
 		self.comments.append('unvollständig')
 
 	def setNichtIV(self):
-		self.addToPages('z_08','Anhang_VIII.html')
-		self.addToPages('z_07A','Anhang_VII_A.html')
-		self.addToPages('z_06','Anhang_VI.html')
+		self.addToProcedures('MRL','z_08','Anhang_VIII.html')
+		self.addToProcedures('MRL','z_07A','Anhang_VII_A.html')
+		self.addToProcedures('MRL','z_06','Anhang_VI.html')
 		self.comments.append('Maschine')
 		self.comments.append('Nicht im Anhang IV aufgeführt')
 
 	def setIVA(self):
-		self.addToPages('z_001','IV_A.html')
-		self.addToPages('z_08','Anhang_VIII.html')
-		self.addToPages('z_09','Anhang_IX.html')
-		self.addToPages('z_10','Anhang_X.html')
+		self.addToProcedures('MRL','z_001','IV_A.html')
+		self.addToProcedures('MRL','z_08','Anhang_VIII.html')
+		self.addToProcedures('MRL','z_09','Anhang_IX.html')
+		self.addToProcedures('MRL','z_10','Anhang_X.html')
 		self.comments.append('Im Anhang IV aufgeführt')
 		self.comments.append('Nach harmonisierter Norm hergestellt.')
 
 	def setIVB(self):
-		self.addToPages('z_001','IV_B.html')
-		self.addToPages('z_09','Anhang_IX.html')
-		self.addToPages('z_10','Anhang_X.html')
+		self.addToProcedures('MRL','z_001','IV_B.html')
+		self.addToProcedures('MRL','z_09','Anhang_IX.html')
+		self.addToProcedures('MRL','z_10','Anhang_X.html')
 		self.comments.append('Im Anhang IV aufgeführt')
 		self.comments.append('Nach harmonisierter Norm hergestellt.')
 		self.comments.append('Norm ber[cksichtigt allerdings nicht alle relevanten grundlegenden Sicherheits- und Gesundheitsschutzanforderungen.')
 
 
 	def setNahrungsmittelMaschine(self):
-		self.addToPages('z_01_2.1','Anhang_I_2.1.html')
+		self.addToProcedures('MRL','z_01_2.1','Anhang_I_2.1.html')
 		self.comments.append('NAHRUNGSMITTELMASCHINEN UND MASCHINEN FÜR KOSMETISCHE ODER PHARMAZEUTISCHE ERZEUGNISSE')
 
 	def setHandMaschine(self):
-		self.addToPages('z_01_2.2','Anhang_I_2.2.html')		
+		self.addToProcedures('MRL','z_01_2.2','Anhang_I_2.2.html')		
 		self.comments.append('HANDGEHALTENE UND/ODER HANDGEFÜHRTE TRAGBARE MASCHINEN')
 
 	def setHolzMaschine(self):
-		self.addToPages('z_01_2.3','Anhang_I_2.3.html')	
+		self.addToProcedures('MRL','z_01_2.3','Anhang_I_2.3.html')	
 		self.comments.append('MASCHINEN ZUR BEARBEITUNG VON HOLZ UND VON WERKSTOFFEN MIT ÄHNLICHEN PHYSIKALISCHEN EIGENSCHAFTEN')
 
 
 	def setBeweglich(self):
-		self.addToPages('z_01_3','Anhang_I_3.html')
+		self.addToProcedures('MRL','z_01_3','Anhang_I_3.html')
 		self.comments.append('ZUSÄTZLICHE GRUNDLEGENDE SICHERHEITS- UND GESUNDHEITSSCHUTZANFORDERUNGEN ZUR AUSSCHALTUNG DER GEFÄHRDUNGEN, DIE VON DER BEWEGLICHKEIT VON MASCHINEN AUSGEHEN')
 
 	def setLastAufnM(self):
-		self.addToPages('z_01_4','Anhang_I_4.html')
+		self.addToProcedures('MRL','z_01_4','Anhang_I_4.html')
 		self.comments.append('ZUSÄTZLICHE GRUNDLEGENDE SICHERHEITS- UND GESUNDHEITSSCHUTZANFORDERUNGEN ZUR AUSSCHALTUNG DER DURCH HEBEVORGÄNGE BEDINGTEN GEFÄHRDUNGEN')
 
 	def setUntertage(self):
-		self.addToPages('z_01_5','Anhang_I_5.html')
+		self.addToProcedures('MRL','z_01_5','Anhang_I_5.html')
 		self.comments.append('ZUSÄTZLICHE GRUNDLEGENDE SICHERHEITS- UND GESUNDHEITSSCHUTZANFORDERUNGEN AN MASCHINEN, DIE ZUM EINSATZ UNTER TAGE BESTIMMT SIND')
 
 	def setHebtPersonen(self):
-		self.addToPages('z_01_6','Anhang_I_6.html')
+		self.addToProcedures('MRL','z_01_6','Anhang_I_6.html')
 		self.comments.append('ZUSÄTZLICHE GRUNDLEGENDE SICHERHEITS- UND GESUNDHEITSSCHUTZANFORDERUNGEN AN MASCHINEN, VON DENEN DURCH DAS HEBEN VON PERSONEN BEDINGTE GEFÄHRDUNGEN AUSGEHEN ')
 
 

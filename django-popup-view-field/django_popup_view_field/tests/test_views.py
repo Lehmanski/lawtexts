@@ -3,7 +3,7 @@ import django
 from django.test import Client, TestCase
 
 if django.VERSION < (1, 10):
-    from django.core.urlresolvers import reverse
+    from django.urls import reverse
 else:
     from django.urls.base import reverse
 

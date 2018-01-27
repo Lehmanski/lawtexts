@@ -1,5 +1,7 @@
 {% load static %}
 {% load staticfiles %}
+{% load bootstrap3 %}
+{% load django_popup_view_field_tags %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en" }}">
 	<script src="{% static "js/jquery.js" %}"></script>
@@ -8,11 +10,15 @@
         <meta charset="utf-8">
         <meta name="description" content="Django madness">
         <meta name="author" content="Nilus van Edel">
+        {% bootstrap_css %}
+    </head>
 
     <body>
         {% block content %}
         
         {% endblock content %}
-
+        <script type="text/javascript" src="{% bootstrap_jquery_url %}"></script>
+        {% bootstrap_javascript %}
+        {% django_popup_view_field_javascript %}
     </body>
 </html>
